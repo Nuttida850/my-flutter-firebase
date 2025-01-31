@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase/pages/display.dart';
 import 'package:flutter_firebase/pages/form.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,7 +18,7 @@ class _HomePageState extends State<HomePage> {
         body: TabBarView(
           children: [
             FormPage(),
-            Container(),
+            DisplayPage(),
           ],
         ),
         backgroundColor: Colors.lightBlue,

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/models/student.dart';
@@ -13,8 +14,11 @@ class FormPage extends StatefulWidget {
 class _FormPageState extends State<FormPage> {
   final formKey = GlobalKey<FormState>();
   Student myStudent = Student();
+  //เตรียม Firebase
   final Future<FirebaseApp> firebase = Firebase.initializeApp();
-
+  //สร้างCollectionชื่อ students
+  CollectionReference studenCollection = FirebaseFirestore.instance.collection("students");
+  
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -105,9 +109,15 @@ class _FormPageState extends State<FormPage> {
                               style:
                                   TextStyle(fontSize: 20, color: Colors.black),
                             ),
-                            onPressed: () {
+                            onPressed: () async{
                               if (formKey.currentState!.validate()) {
                                 formKey.currentState!.save();
+                                await studenCollection.add({
+                                  "fname": myStudent.fname,
+                                  "lname": myStudent.lname,
+                                  "email": myStudent.email,
+                                  "score": myStudent.score,
+                              });
                                 formKey.currentState!.reset();
                               }
                             },
